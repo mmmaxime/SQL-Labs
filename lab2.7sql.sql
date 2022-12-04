@@ -58,10 +58,10 @@ ORDER BY number_actors DESC;
 SELECT * FROM PAYMENT;
 SELECT * FROM CUSTOMER;
 
-SELECT c.last_name as customer, sum(p.payment_id) as total_paid
-FROM sakila.payment p
-join sakila.customer c
-on c.customer_id = p.customer_id
+SELECT SUM(p.amount) AS "Amount Paid",c.first_name,c.last_name
+FROM payment p
+JOIN customer c
+ON p.customer_id = c.customer_id
 GROUP BY c.customer_id
 ORDER BY c.last_name ASC;
 
@@ -69,7 +69,7 @@ ORDER BY c.last_name ASC;
 Select * from film_category;
 SELECT * from category;
 
-SELECT c.name, sum(fc.film_id) as number_films
+SELECT c.name, count(fc.film_id) as number_films
 FROM sakila.film_category fc
 JOIN sakila.category c
 ON fc.category_id = c.category_id

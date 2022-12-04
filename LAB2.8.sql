@@ -31,14 +31,14 @@ SELECT * FROM CATEGORY;
 SELECT * FROM FILM_CATEGORY;
 SELECT * FROM FILM;
 
-SELECT c.name as category, f.length
-FROM sakila.film f
-JOIN sakila.film_category fc
+SELECT c.name, AVG(f.length)
+FROM film f
+JOIN film_category fc
 ON f.film_id = fc.film_id
-JOIN sakila.category c
-on c.category_id = fc.category_id
-GROUP BY c.name
-ORDER BY f.length ASC;
+JOIN category c
+ON  c.category_id = fc.category_id
+GROUP BY c.category_id, f.length
+ORDER BY f.length DESC;
  
 -- 4.Display the most frequently rented movies in descending order.
 SELECT * FROM RENTAL;
@@ -74,7 +74,6 @@ on cat.category_id = fc.category_id
 GROUP BY cat.name
 ORDER BY gross_revenue DESC
 limit 5;
-
 
 -- 6. Is "Academy Dinosaur" available for rent from Store 1?
 SELECT *
