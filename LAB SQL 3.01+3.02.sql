@@ -83,13 +83,12 @@ ORDER BY sum(amount) DESC
 limit 1))); 
 
 -- 8. Customers who spent more than the average payments.
-SELECT AVG(amount) from payment; -- subquery
+SELECT sum(amount) AS total FROM payment; -- subquery
 
-SELECT concat('first_name','last_name') as total 
-from customer
-WHERE customer_id LIKE (
-SELECT AVG(amount) from payment
-GROUP BY 
-HAVING BY  DESC
-limit 5);  -- I will resubmit this at another time, mind is having a blocker from long day of travelling. 
+SELECT customer_id, sum(amount) 
+FROM payment GROUP BY customer_id HAVING sum(amount) >
+	(SELECT avg(total) FROM (
+    SELECT sum(amount) AS total FROM payment 
+    GROUP BY customer_id) sum1) 
+    ORDER BY sum(amount) desc; 
     
